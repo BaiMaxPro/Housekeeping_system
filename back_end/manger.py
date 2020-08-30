@@ -6,6 +6,7 @@ from App.customer import customer
 from App.employee import employee
 
 app = create_app()  # 创建app
+
 app.register_blueprint(admin, url_prefix='/admin')  # 注册蓝图
 app.register_blueprint(customer, url_prefix='/customer')  # 注册蓝图
 app.register_blueprint(employee, url_prefix='/employee')  # 注册蓝图
