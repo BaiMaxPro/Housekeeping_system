@@ -1,7 +1,7 @@
 from flask_restful import Resource, reqparse
 
-from session.model import User, Session
-from db import db
+from backend.session.model import User, Session
+from backend.db import db
 
 from flask_restful import abort
 
@@ -35,7 +35,7 @@ class UserRootAPI(Resource):
         role = args["role"]
 
         if role == None:
-            role = "user"
+            role = "customer"
 
         if username == None or password == None:
             return error("Request must contain username and password.", 400)
@@ -99,10 +99,7 @@ class LoginAPI(Resource):
 
     @authenticated
     def get(self, **kwargs):
-        if kwargs["role"] not in ("admin", "employee"):
-            return "Only admin or employee can use it", 401
-
-        return kwargs["session"].user.role, 200
+        return kwargs["session"].json(), 200
 
     def post(self):
         parser = reqparse.RequestParser()

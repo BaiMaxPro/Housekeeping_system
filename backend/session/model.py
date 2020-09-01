@@ -4,7 +4,7 @@ import hashlib
 import os
 from base64 import b64encode, b64decode
 
-from db import db
+from backend.db import db
 
 from datetime import datetime, timedelta
 

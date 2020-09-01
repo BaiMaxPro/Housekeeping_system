@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-from session.generator import UsersGenerator
+from backend.session.generator import UsersGenerator
 
 
 def create_db(app: Flask, db: SQLAlchemy):

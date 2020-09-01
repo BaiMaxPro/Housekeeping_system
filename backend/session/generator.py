@@ -1,4 +1,4 @@
-from session.model import User
+from backend.session.model import User
 
 users = [
     ("admin", "pass", "admin"),
