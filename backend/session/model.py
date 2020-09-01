@@ -74,7 +74,7 @@ class User(db.Model):
     role = db.Column(db.String(10), nullable=False)
 
     @staticmethod
-    def new_user(username, password, role) -> 'User':
+    def new_user(username, password, role="customer") -> 'User':
         if not role in roles:
             raise ValueError(f"Invalid role '{role}'")
 

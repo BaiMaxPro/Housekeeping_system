@@ -1,6 +1,10 @@
 from flask import Flask, Blueprint
 from flask_restful import Api
 
+# Patch PYTHONPATH
+from sys import path
+path.append(".")
+
 from backend import config
 from backend.db import db
 from backend.create_db import create_db
