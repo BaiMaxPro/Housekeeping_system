@@ -6,7 +6,7 @@ from backend.session.model import Session, User
 from backend.session.generator import users
 from backend.session.view import authenticated
 
-from backend.test_utils import setup
+from backend.test_utils import setup, app
 
 def test_new_session(setup):
     username = users[0][0]
@@ -57,7 +57,7 @@ def test_session_role(setup):
     assert sess_customer.user.role == "customer"
     assert sess_employee.user.role == "employee"
 
-def test_auth_success(setup, mocker):
+def test_auth_success(setup, app, mocker):
     username = "admin"
     role = "admin"
     sess = Session.new_session("admin")
@@ -65,7 +65,8 @@ def test_auth_success(setup, mocker):
     setup.session.add(sess)
     setup.session.commit()
 
-    request = mocker.patch.object(flask, "request")
+    with app.test_request_context():
+        request = mocker.patch.object(flask, "request")
     request.headers = {"session-id":sess.id}
     
     def inner_func(username, expected_role, expected_sessid, **kwargs):
@@ -83,7 +84,7 @@ def test_auth_success(setup, mocker):
     assert resp == "Success"
     assert code == 200
     
-def test_auth_faliure(setup, mocker):
+def test_auth_faliure(setup, app, mocker):
     username = "admin"
     role = "admin"
     expire = datetime.now() + timedelta(hours=-3)
@@ -92,7 +93,8 @@ def test_auth_faliure(setup, mocker):
     setup.session.add(sess)
     setup.session.commit()
 
-    request = mocker.patch.object(flask, "request")
+    with app.test_request_context():
+        request = mocker.patch.object(flask, "request")
     request.headers = {"session-id":sess.id}
     
     def inner_func(**kwargs):
