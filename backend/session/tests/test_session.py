@@ -73,11 +73,15 @@ def test_auth_success(setup, mocker):
         assert sess.user.username == username
         assert sess.user.role == expected_role
         assert sess.id == expected_sessid
+        return "Success", 200
     
     wrapped_func = authenticated(inner_func)
-    wrapped_func(username, role, sess.id, 
+    resp, code = wrapped_func(username, role, sess.id, 
         testing_request=request
     )
+
+    assert resp == "Success"
+    assert code == 200
     
 def test_auth_faliure(setup, mocker):
     username = "admin"
