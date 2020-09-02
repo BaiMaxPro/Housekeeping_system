@@ -14,10 +14,11 @@ class Order(db.Model):
     employee_id = db.relationship('Employee', backref=db.backref('info', uselist=False ,lazy=True))
     order_time = db.Column(db.String(45), nullable=False)
     star_rating = db.Column(db.Integer, nullable=True)
+    stat = db.Column(db.Integer, nullable=False)
 
 
     @staticmethod
-    def new_Order(id, service_items, customer_id, employee_id, order_time, star_rating) -> "Order":
+    def new_Order(id, service_items, customer_id, employee_id, order_time, stat, star_rating) -> "Order":
         order = Order.get_by_id(id)
         return Order(
             id = id,
@@ -25,7 +26,8 @@ class Order(db.Model):
             customer_id = customer_id,
             employee_id = employee_id,
             order_time = order_time,
-            star_rating = star_rating
+            star_rating = star_rating,
+            stat = stat
         )
 
     def get_by_id(id) -> "Order":
@@ -50,6 +52,7 @@ class Order(db.Model):
             "employee_id": self.employee_id,
             "order_time": self.order_time,
             "star_rating": self.star_rating,
+            "stat": self.stat,
         }
 
     def get_id(role,id) -> "UUID_List":
