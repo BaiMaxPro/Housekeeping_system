@@ -3,7 +3,6 @@ from sqlalchemy_utils import UUIDType
 
 from backend.db import db
 from backend.session.model import User
-from backend.order.model import Order
 
 class Employee(db.Model):
     __tablename__ = "employee"
@@ -18,7 +17,9 @@ class Employee(db.Model):
 
     @staticmethod
     def new_Employee(id, name, gender, tel, level=0) -> "Employee":
+        # Test that employee id exists in user table
         user = User.get_by_id(id)
+
         return Employee(
             id = id,
             name = name,
@@ -51,11 +52,3 @@ class Employee(db.Model):
             "tel": self.tel,
             "level": self.level,
         }
-
-    @staticmethod
-    def get_orderinfo(id): 
-        orderid = Order.get_id('employee',id)
-        order = Order.get_by_id(orderid)
-        return order
-
-

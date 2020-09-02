@@ -6,20 +6,28 @@ from backend.employee.model import Employee
 from backend.customer.model import Customer
 
 class Order(db.Model):
-    __tablename__ = "order"
+    __tablename__ = "orders"
 
-    id = db.Column(UUIDType(), db.ForeignKey(Customer.id,Employee.id), primary_key=True)
+    id = db.Column(UUIDType(), primary_key=True)
     service_items = db.Column(db.String(45), nullable=False)
-    customer_id = db.relationship('Customer', backref=db.backref('info', uselist=False ,lazy=True))
-    employee_id = db.relationship('Employee', backref=db.backref('info', uselist=False ,lazy=True))
+    
+    customer_id = db.Column(UUIDType(), db.ForeignKey(Customer.id), nullable=False)
+    employee_id = db.Column(UUIDType(), db.ForeignKey(Employee.id), nullable=False)
+    
+    customer = db.relationship('Customer', backref=db.backref('orders', lazy=True))
+    employee = db.relationship('Employee', backref=db.backref('orders', lazy=True))
+    
     order_time = db.Column(db.String(45), nullable=False)
     star_rating = db.Column(db.Integer, nullable=True)
     stat = db.Column(db.Integer, nullable=False)
 
 
     @staticmethod
-    def new_Order(id, service_items, customer_id, employee_id, order_time, stat, star_rating) -> "Order":
-        order = Order.get_by_id(id)
+    def new_Order(id, service_items, customer_id, employee_id, order_time, stat, star_rating=None) -> "Order":
+        # Test that customer & employee ids are valid
+        customer = Customer.get_by_id(customer_id)
+        employee = Employee.get_by_id(employee_id)
+        
         return Order(
             id = id,
             service_items = service_items,
@@ -55,7 +63,7 @@ class Order(db.Model):
             "stat": self.stat,
         }
 
-    def get_id(role,id) -> "UUID_List":
+    def get_by_participant_id(role, id) -> List:
         if type(id) != UUID:
             try:
                 id = UUID(id)
@@ -70,5 +78,5 @@ class Order(db.Model):
         if query.count() == 0:
             raise ValueError(f"Order by {str(role)}id {str(id)} not found.")
         
-        return query
+        return query.all()
 

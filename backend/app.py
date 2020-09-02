@@ -10,8 +10,6 @@ from backend.db import db
 from backend.create_db import create_db
 
 from backend.session.view import UserRootAPI, UserAPI, LoginAPI
-# from backend.order.model import new_Order
-from backend.employee.model import get_orderinfo
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = config.DB_URI  
@@ -25,8 +23,6 @@ api = Api(blueprint)
 api.add_resource(LoginAPI, "/login")
 api.add_resource(UserRootAPI, "/user")
 api.add_resource(UserAPI, "/user/<string:id>")
-# api.add_resource(new_Order,"/user/new_order")
-api.add_resource(get_orderinfo,"/user/orderinfo")
 
 app.register_blueprint(blueprint, url_prefix='/api')
 
