@@ -28,7 +28,6 @@ class Order(db.Model):
             star_rating = star_rating
         )
 
-    @staticmethod
     def get_by_id(id) -> "Order":
         if type(id) != UUID:
             try:
@@ -52,3 +51,21 @@ class Order(db.Model):
             "order_time": self.order_time,
             "star_rating": self.star_rating,
         }
+
+    def get_id(role,id) -> "UUID_List":
+        if type(id) != UUID:
+            try:
+                id = UUID(id)
+            except:
+                raise AttributeError("Invalid UUID")
+
+        if role =='customer':
+            query = Order.query.filter_by(customer_id=id)
+        elif role == 'employee':
+            query = Order.query.filter_by(employee_id=id)
+        
+        if query.count() == 0:
+            raise ValueError(f"Order by {str(role)}id {str(id)} not found.")
+        
+        return query
+
