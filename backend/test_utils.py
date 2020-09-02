@@ -14,6 +14,11 @@ def client():
     with app.test_client() as client:
         yield client
 
+@pytest.fixture()
+def app():
+    from backend.app import app
+    return app
+
 # Base URL config  
 port = os.environ.get("FLASK_TEST_PORT")
 server = os.environ.get("FLASK_TEST_SERVER")
