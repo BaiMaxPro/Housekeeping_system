@@ -3,13 +3,12 @@ import pytest
 import flask
 
 from backend.session.model import Session, User
-from backend.session.generator import users
 from backend.session.view import authenticated
 
 from backend.test_utils import setup, app
 
 def test_new_session(setup):
-    username = users[0][0]
+    username = "admin"
     session = Session.new_session(username)
     assert session.user.username == username
     assert not session.expired()
@@ -21,7 +20,7 @@ def test_new_session(setup):
     assert session.user.username == username
 
 def test_expired_session(setup):
-    username = users[1][0]
+    username = "customer"
     time = datetime.now() - timedelta(hours=2)
     session = Session.new_session(username, time)
     setup.session.add(session)
@@ -31,7 +30,7 @@ def test_expired_session(setup):
         assert session.get_by_id(session.id)
 
 def test_user_backref(setup):
-    username = users[2][0]
+    username = "employee"
     session = Session.new_session(username)
     setup.session.add(session)
     setup.session.commit()
