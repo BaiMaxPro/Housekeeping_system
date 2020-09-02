@@ -1,16 +1,15 @@
-from backend.test_utils import base_url
+from backend.test_utils import full_url
 import requests
-from requests.compat import urljoin
 
 def test_not_logged_in():
-    url = urljoin(base_url, "login")
+    url = full_url("login")
     resp = requests.get(url)
 
     assert resp.status_code == 401
     assert "error" in resp.json().keys()
 
 def test_admin_login():
-    url = urljoin(base_url, "login")
+    url = full_url("login")
     headers = {"username": "admin", "password": "pass"}
     resp = requests.post(url, headers=headers)
 
@@ -27,7 +26,7 @@ def test_admin_login():
     assert user["role"] == "admin"
 
 def test_admin_logout():
-    url = urljoin(base_url, "login")
+    url = full_url("login")
     headers = {"username": "admin", "password": "pass"}
     resp = requests.post(url, headers=headers)  # Login
     assert resp.status_code == 200

@@ -4,6 +4,8 @@ from sqlalchemy_utils import UUIDType
 from backend.db import db
 from backend.session.model import User
 
+from backend.view_utils import to_uuid
+
 class Customer(db.Model):
     __tablename__ = "customers"
 
@@ -29,11 +31,7 @@ class Customer(db.Model):
 
     @staticmethod
     def get_by_id(id) -> "Customer":
-        if type(id) != UUID:
-            try:
-                id = UUID(id)
-            except:
-                raise AttributeError("Invalid UUID")
+        id = to_uuid(id)
 
         query = Customer.query.filter_by(id=id)
 

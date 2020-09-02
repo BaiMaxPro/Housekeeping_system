@@ -86,6 +86,20 @@ class User(db.Model):
             salt = salt,
             role = role
         )
+    
+    @staticmethod
+    def new_user_with_id(uid, username, password, role="customer") -> 'User':
+        if not role in roles:
+            raise ValueError(f"Invalid role '{role}'")
+
+        hash, salt = User.create_hash(password)
+        return User(
+            id = UUID(uid),
+            username = username, 
+            hash = hash, 
+            salt = salt,
+            role = role,
+        )
 
     @staticmethod
     def create_hash(password, salt=None) -> (bytes, bytes):
@@ -139,3 +153,8 @@ class User(db.Model):
             raise ValueError(f"User '{username}' not found.")
 
         return query.first()
+    
+    @staticmethod
+    def get_by_role(role) -> 'User':
+        query = User.query.filter_by(role=role)
+        return query.all()

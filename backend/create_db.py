@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 from backend.session.generator import UsersGenerator
-
+from backend.customer.generator import CustomersGenerator
 
 def create_db(app: Flask, db: SQLAlchemy):
 
@@ -11,6 +11,7 @@ def create_db(app: Flask, db: SQLAlchemy):
 
     generators = [
         UsersGenerator,
+        CustomersGenerator,
     ]
 
     max_initial_table_length = 20000
@@ -20,5 +21,5 @@ def create_db(app: Flask, db: SQLAlchemy):
             if(idx > max_initial_table_length):
                 break
             db.session.add(row)
+        db.session.commit()
 
-    db.session.commit()

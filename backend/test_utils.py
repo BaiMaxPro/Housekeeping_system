@@ -1,5 +1,6 @@
 import pytest
 import os
+from requests.compat import urljoin
 
 @pytest.fixture(scope="session")
 def setup():
@@ -29,4 +30,6 @@ if port == None:
 if server == None:
     server = "localhost"
 
-base_url = f"http://{server}:{port}/api/"
+def full_url(endpoint):
+    base_url = f"http://{server}:{port}/api/"
+    return urljoin(base_url, endpoint)

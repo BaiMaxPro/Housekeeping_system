@@ -9,8 +9,6 @@ from backend import config
 from backend.db import db
 from backend.create_db import create_db
 
-from backend.session.view import UserRootAPI, UserAPI, LoginAPI
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = config.DB_URI  
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = config.SQLALCHEMY_TRACK_MODIFICATIONS
@@ -20,9 +18,14 @@ db.init_app(app=app)
 blueprint = Blueprint('api', __name__)
 api = Api(blueprint)
 
+from backend.session.view import UserRootAPI, UserAPI, LoginAPI
 api.add_resource(LoginAPI, "/login")
 api.add_resource(UserRootAPI, "/user")
 api.add_resource(UserAPI, "/user/<string:id>")
+
+from backend.customer.view import CustomerRootAPI, CustomerAPI
+api.add_resource(CustomerRootAPI, "/customer")
+api.add_resource(CustomerAPI, "/customer/<string:id>")
 
 app.register_blueprint(blueprint, url_prefix='/api')
 

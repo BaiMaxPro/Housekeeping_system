@@ -1,9 +1,8 @@
-from backend.test_utils import base_url
+from backend.test_utils import full_url
 import requests
-from requests.compat import urljoin
 
 def test_default_users():
-    url = urljoin(base_url, "user")
+    url = full_url("user")
     resp = requests.get(url).json()
     usernames = [u["username"] for u in resp]
     assert "admin" in usernames
@@ -11,7 +10,7 @@ def test_default_users():
     assert "employee" in usernames
 
 def test_create_user():
-    url = urljoin(base_url, "user")
+    url = full_url("user")
     resp = requests.post(url, 
         data={"username": "a", "password": "pass"},
     )

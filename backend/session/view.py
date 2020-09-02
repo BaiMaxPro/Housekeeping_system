@@ -3,18 +3,7 @@ from flask_restful import Resource, reqparse
 from backend.session.model import User, Session
 from backend.db import db
 
-from flask_restful import abort
-
-def error(msg:str, code=400) -> (dict, int):
-    '''Error Logging'''
-    headers = {}
-    if code == 401:
-        headers["WWW-Authenticate"] = "Digest"
-    if type(msg) != str:
-        msg = str(msg)
-    print(msg)
-    return {"error": msg}, code, headers
-
+from backend.view_utils import error
 
 class UserRootAPI(Resource):
     parser = reqparse.RequestParser()
