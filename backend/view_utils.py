@@ -7,7 +7,7 @@ def error(msg:str, code=400) -> (dict, int):
         headers["WWW-Authenticate"] = "Digest"
     if type(msg) != str:
         msg = str(msg)
-    print(msg)
+    # print(msg)
     return {"error": msg}, code, headers
 
 def to_uuid(id) -> UUID:
