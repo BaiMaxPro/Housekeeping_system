@@ -10,7 +10,7 @@ class Customer(db.Model):
     __tablename__ = "customers"
 
     id = db.Column(UUIDType(), db.ForeignKey(User.id), primary_key=True)
-    user = db.relationship('User', backref=db.backref('info', uselist=False ,lazy=True))
+    user = db.relationship('User')
     name = db.Column(db.String(45), nullable=False)
     gender = db.Column(db.String(45), nullable=False)
     tel = db.Column(db.String(45), nullable=False)

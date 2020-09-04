@@ -23,9 +23,10 @@ api.add_resource(LoginAPI, "/login")
 api.add_resource(UserRootAPI, "/user")
 api.add_resource(UserAPI, "/user/<string:id>")
 
-from backend.customer.view import CustomerRootAPI, CustomerAPI
+from backend.customer.view import CustomerRootAPI, CustomerAPI, CustomerOrdersAPI
 api.add_resource(CustomerRootAPI, "/customer")
 api.add_resource(CustomerAPI, "/customer/<string:id>")
+api.add_resource(CustomerOrdersAPI, "/customer/<string:id>/orders")
 
 app.register_blueprint(blueprint, url_prefix='/api')
 

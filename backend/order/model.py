@@ -5,6 +5,8 @@ from backend.db import db
 from backend.employee.model import Employee
 from backend.customer.model import Customer
 
+from backend.view_utils import to_uuid
+
 class Order(db.Model):
     __tablename__ = "orders"
 
@@ -38,12 +40,9 @@ class Order(db.Model):
             stat = stat
         )
 
+    @staticmethod
     def get_by_id(id) -> "Order":
-        if type(id) != UUID:
-            try:
-                id = UUID(id)
-            except:
-                raise AttributeError("Invalid UUID")
+        id = to_uuid(id)
 
         query = Order.query.filter_by(id=id)
 
@@ -63,20 +62,16 @@ class Order(db.Model):
             "stat": self.stat,
         }
 
-    def get_by_participant_id(role, id) -> List:
-        if type(id) != UUID:
-            try:
-                id = UUID(id)
-            except:
-                raise AttributeError("Invalid UUID")
+    @staticmethod
+    def get_by_participant_id(role, id) -> list:
+        id = to_uuid(id)
 
         if role =='customer':
             query = Order.query.filter_by(customer_id=id)
         elif role == 'employee':
             query = Order.query.filter_by(employee_id=id)
-        
-        if query.count() == 0:
-            raise ValueError(f"Order by {str(role)}id {str(id)} not found.")
-        
+        else:
+            raise AttributeError(f"Role {role} not valid for order {str(id)}")
+
         return query.all()
 

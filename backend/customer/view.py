@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
 
 from backend.customer.model import Customer
+from backend.order.model import Order
 from backend.db import db
 
 from backend.view_utils import error, to_uuid
@@ -88,3 +89,23 @@ class CustomerAPI(Resource):
 
         return cust.json(), 201
         
+class CustomerOrdersAPI(Resource):
+    @authenticated
+    def get(self, id, **kwargs):
+        try:
+            id = to_uuid(id)
+        except AttributeError as e:
+            return error(e, 400)
+
+        auth_user = kwargs["user"]
+
+        if _acl_same_customer_id_or_admin(id, auth_user):
+            try:
+                orders = Order.get_by_participant_id("customer", id)
+                return [order.json() for order in orders]
+            except AttributeError as e:
+                return error(e, 400)
+            except ValueError as e:
+                return error(e, 404)
+        else:
+            return error("Not authorized", 401)

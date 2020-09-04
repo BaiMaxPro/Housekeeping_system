@@ -4,11 +4,13 @@ from sqlalchemy_utils import UUIDType
 from backend.db import db
 from backend.session.model import User
 
+from backend.view_utils import to_uuid
+
 class Employee(db.Model):
     __tablename__ = "employee"
 
     id = db.Column(UUIDType(), db.ForeignKey(User.id), primary_key=True)
-    user = db.relationship('User', backref=db.backref('info', uselist=False ,lazy=True))
+    user = db.relationship('User')
     name = db.Column(db.String(45), nullable=False)
     gender = db.Column(db.String(45), nullable=False)
     tel = db.Column(db.String(45), nullable=False)
@@ -44,6 +46,16 @@ class Employee(db.Model):
         
         return query.first()
     
+    @staticmethod
+    def id_exists(id) -> bool:
+        id = to_uuid(id)
+
+        query = Employee.query.filter_by(id=id)
+
+        if query.count() > 0:
+            return True
+        return False
+
     def json(self) -> dict:
         return {
             "id": str(self.id),
