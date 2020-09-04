@@ -20,6 +20,8 @@ class Customer(db.Model):
     @staticmethod
     def new_customer(id, name, gender, tel, address, level=0) -> "Customer":
         user = User.get_by_id(id)
+        assert user.role == "customer"
+
         return Customer(
             id = id,
             name = name,
@@ -39,6 +41,16 @@ class Customer(db.Model):
             raise ValueError(f"Customer {str(id)} not found.")
         
         return query.first()
+
+    @staticmethod
+    def id_exists(id) -> bool:
+        id = to_uuid(id)
+
+        query = Customer.query.filter_by(id=id)
+
+        if query.count() > 0:
+            return True
+        return False
     
     def json(self) -> dict:
         return {

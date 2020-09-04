@@ -95,3 +95,39 @@ def test_root_api_non_admin_access():
 
         assert "error" in resp.json().keys()
         assert resp.status_code == 401
+
+def test_create():
+    # Create new user
+    username = "e2e_test_customer_test_create"
+    url = full_url("user")
+    resp = requests.post(url, data={"username": username, "password": "pass"})
+    data = resp.json()
+    assert data["username"] == username
+    assert resp.status_code == 201
+    assert data["id"] != None
+
+    uid = data["id"]
+
+    sessid, sess = login(username, "pass")
+    url = full_url(f"customer/{uid}")
+    headers = {"session-id": sessid}
+    req = {
+       "name": "Test Engineer",
+       "gender": "Non-binary",
+       "tel": "911",
+       "address": "Mars",
+    }
+    resp = requests.post(url, data=req, headers=headers)
+
+    data = resp.json()
+
+    print(data)
+
+    assert resp.status_code == 201
+    assert data["id"] == uid
+    assert data["name"] == req["name"]
+    assert data["gender"] == req["gender"]
+    assert data["tel"] == req["tel"]
+    assert data["address"] == req["address"]
+    assert data["level"] == 0
+
