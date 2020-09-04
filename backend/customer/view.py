@@ -8,7 +8,12 @@ from backend.view_utils import error, to_uuid
 from backend.session.view import authenticated
 
 class CustomerRootAPI(Resource):
-    def get(self):
+    @authenticated
+    def get(self, **kwargs):
+        auth_user = kwargs["user"]
+        if auth_user.role != "admin":
+            return error("Not authorized", 401)
+
         customers = Customer.query.all()
         resp = [customer.json() for customer in customers]
         return resp

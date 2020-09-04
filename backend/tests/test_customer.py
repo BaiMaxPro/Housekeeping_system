@@ -2,7 +2,16 @@ from backend.test_utils import full_url
 from backend.tests.utils import login
 import requests
 
-def test_customer_access():
+def _valid_customer(customer) -> bool:
+    assert "id" in customer.keys()
+    assert "name" in customer.keys()
+    assert "gender" in customer.keys()
+    assert "tel" in customer.keys()
+    assert "address" in customer.keys()
+    assert "level" in customer.keys()
+    return True
+
+def test_byid_api_customer_access():
     # Login
     sessid, sess = login("customer", "pass")
 
@@ -12,14 +21,9 @@ def test_customer_access():
     resp = requests.get(url, headers=headers)
     info = resp.json()
 
-    assert "id" in info.keys()
-    assert "name" in info.keys()
-    assert "gender" in info.keys()
-    assert "tel" in info.keys()
-    assert "address" in info.keys()
-    assert "level" in info.keys()
+    assert _valid_customer(info)
 
-def test_admin_access():
+def test_byid_api_admin_access():
     # Login
     sessid, sess = login("admin", "pass")
     print(sess)
@@ -37,14 +41,9 @@ def test_admin_access():
     resp = requests.get(url, headers=headers)
     info = resp.json()
 
-    assert "id" in info.keys()
-    assert "name" in info.keys()
-    assert "gender" in info.keys()
-    assert "tel" in info.keys()
-    assert "address" in info.keys()
-    assert "level" in info.keys()
+    assert _valid_customer(info)
 
-def test_other_customer_no_access():
+def test_byid_api_other_customer_no_access():
     # Login
     sessid, sess = login("admin", "pass")
 
@@ -53,6 +52,8 @@ def test_other_customer_no_access():
     url = f"{full_url('customer')}"
     resp = requests.get(url, headers=headers)
     customer = resp.json()[-1]
+
+    assert _valid_customer(customer)
 
     # Login as another customer
     sessid, sess = login("customer", "pass")
@@ -67,3 +68,30 @@ def test_other_customer_no_access():
 
     assert "error" in resp.json().keys()
     assert resp.status_code == 401
+
+def test_root_api_admin_access():
+    # Login
+    sessid, sess = login("admin", "pass")
+    print(sess)
+
+    headers = {"session-id": sessid}
+    url = f"{full_url('customer')}"
+    resp = requests.get(url, headers=headers)
+    customers = resp.json()
+    assert len(customers) > 0
+
+    assert _valid_customer(customers[0])
+
+def test_root_api_non_admin_access():
+    for user in ("customer", "employee"):
+        # Login
+        sessid, sess = login(user, "pass")
+        print(f"User {user}: {sess}")
+
+        headers = {"session-id": sessid}
+        url = f"{full_url('customer')}"
+        resp = requests.get(url, headers=headers)
+        customers = resp.json()
+
+        assert "error" in resp.json().keys()
+        assert resp.status_code == 401
