@@ -74,4 +74,11 @@ class Order(db.Model):
             raise AttributeError(f"Role {role} not valid for order {str(id)}")
 
         return query.all()
-
+        
+    @staticmethod
+    def change_stat(): #when employee finished the order, she use this to change the order stat
+        stat = 1
+    
+    @staticmethod
+    def change_star(star):
+        star = star
