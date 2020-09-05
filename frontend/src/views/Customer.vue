@@ -1,18 +1,28 @@
 <template>
-  <div>
-    CustomerHome
+  <div class="fill-height">
+    <!-- 对于router link进行判断渲染相应组件 -->
+    <Home />
   </div>
 </template>
 
 <script>
+
+import Home from "../components/customer/Home.vue"
+
 export default {
   mounted: function(){
     this.setDrawer()
   },
 
+  // props: ["active"],
+
   data: () => ({
 
   }),
+
+  components: {
+    Home,
+  },
 
   methods: {
     setDrawer(){
