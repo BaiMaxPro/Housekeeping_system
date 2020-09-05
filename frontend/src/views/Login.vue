@@ -22,9 +22,12 @@ export default {
   }),
 
   mounted() {
+    this.$store.dispatch("updateDrawer", {})
+
     if(this.$store.getters.loggedIn){
       this.$router.push({name: "Home"})
     }
+
   },
 
   methods: {
