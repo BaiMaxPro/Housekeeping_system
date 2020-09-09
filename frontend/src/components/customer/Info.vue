@@ -16,7 +16,7 @@
 <script>
 export default {
     mounted(){
-      this.form = this.$store.getters["customer/info"]
+        this.form = this.$store.getters["customer/info"]
     },
     data: () => ({
         form: {
