@@ -28,6 +28,11 @@ api.add_resource(CustomerRootAPI, "/customer")
 api.add_resource(CustomerAPI, "/customer/<string:id>")
 api.add_resource(CustomerOrdersAPI, "/customer/<string:id>/orders")
 
+from backend.employee.view import EmployeeRootAPI, EmployeeAPI, EmployeeOrdersAPI
+api.add_resource(EmployeeRootAPI, "/employee")
+api.add_resource(EmployeeAPI, "/employee/<string:id>")
+api.add_resource(EmployeeOrdersAPI, "/employee/<string:id>/orders")
+
 app.register_blueprint(blueprint, url_prefix='/api')
 
 if __name__ == '__main__':
