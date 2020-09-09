@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from backend.session.generator import UsersGenerator
 from backend.customer.generator import CustomersGenerator
+from backend.employee.generator import EmployeesGenerator
 
 def create_db(app: Flask, db: SQLAlchemy):
 
@@ -14,6 +15,7 @@ def create_db(app: Flask, db: SQLAlchemy):
     generators = [
         UsersGenerator,
         CustomersGenerator,
+        EmployeesGenerator,
     ]
 
     max_initial_table_length = 20000

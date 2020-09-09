@@ -11,7 +11,7 @@ class Order(db.Model):
     __tablename__ = "orders"
 
     id = db.Column(UUIDType(), primary_key=True)
-    service_items = db.Column(db.String(45), nullable=False)
+    item = db.Column(db.String(45), nullable=False)
     
     customer_id = db.Column(UUIDType(), db.ForeignKey(Customer.id), nullable=False)
     employee_id = db.Column(UUIDType(), db.ForeignKey(Employee.id), nullable=False)
@@ -25,14 +25,14 @@ class Order(db.Model):
 
 
     @staticmethod
-    def new_Order(id, service_items, customer_id, employee_id, order_time, stat, star_rating=None) -> "Order":
+    def new_order(id, item, customer_id, employee_id, order_time, stat=0, star_rating=None) -> "Order":
         # Test that customer & employee ids are valid
         customer = Customer.get_by_id(customer_id)
         employee = Employee.get_by_id(employee_id)
         
         return Order(
             id = id,
-            service_items = service_items,
+            item = item,
             customer_id = customer_id,
             employee_id = employee_id,
             order_time = order_time,
@@ -54,9 +54,9 @@ class Order(db.Model):
     def json(self) -> dict:
         return {
             "id": str(self.id),
-            "service_items": service_items,
-            "customer_id": self.customer_id,
-            "employee_id": self.employee_id,
+            "item": self.item,
+            "customer": self.customer,
+            "employee": self.employee,
             "order_time": self.order_time,
             "star_rating": self.star_rating,
             "stat": self.stat,
@@ -74,11 +74,3 @@ class Order(db.Model):
             raise AttributeError(f"Role {role} not valid for order {str(id)}")
 
         return query.all()
-        
-    @staticmethod
-    def change_stat(): #when employee finished the order, she use this to change the order stat
-        stat = 1
-    
-    @staticmethod
-    def change_star(star):
-        star = star
