@@ -19,7 +19,7 @@
       <v-divider v-if="showDrawerTitle"></v-divider>
 
       <v-list dense nav v-if="showDrawerItems">
-        <v-list-item v-for="item in drawer.items" :key="item.title" link>
+        <v-list-item v-for="item in drawer.items" :key="item.title" :to="item.href">
           <v-list-item-icon v-if="item.icon">
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
