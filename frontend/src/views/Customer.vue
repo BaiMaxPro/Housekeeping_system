@@ -1,12 +1,16 @@
 <template>
   <div class="fill-height">
     <Home v-if="currentPage == 'home'" />
+    <Info v-if="currentPage == 'info'" />
+    <Order v-if="currentPage == 'order'" />
   </div>
 </template>
 
 <script>
 
 import Home from "../components/customer/Home.vue"
+import Info from "../components/customer/Info.vue"
+import Order from "../components/customer/Order.vue"
 
 export default {
   mounted: function(){
@@ -25,16 +29,18 @@ export default {
 
   components: {
     Home,
+    Info,
+    Order,
   },
 
   methods: {
     setDrawer(){
       this.$store.dispatch('updateDrawer', {
-        title: "测试测试",
+        title: "客户应用",
         items: [
-          {title: "测试1"},
-          {title: "测试2"},
-          {title: "测试3", icon: "mdi-account"},
+          {title: "会员中心", icon: "mdi-account-heart"},
+          {title: "基本信息", icon: "mdi-account",href:"./info"},
+          {title: "订单中心", icon: "mdi-sticker-check-outline",href:"./order"},
         ]
       })
     }

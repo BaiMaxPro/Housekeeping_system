@@ -1,10 +1,9 @@
-
 <template>
   <v-container class="fill-height" fluid>
     <v-row align="center" justify="center">
       <v-card class="mx-auto" max-width="420">
-        <h1 class="mx-10">欢迎来到顾客主页</h1>
-        <p>Something else here</p>
+        <h1 class="mx-10" align="center">欢迎来到顾客主页</h1>
+        <v-img height = "1080/2" width="1920/2" src="../../images/customer1.jpg"><p>Something else here</p></v-img>
       </v-card>
     </v-row>
   </v-container>

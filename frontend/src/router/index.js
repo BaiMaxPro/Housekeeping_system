@@ -21,6 +21,8 @@ Vue.use(VueRouter)
     component: () => import('../views/Customer.vue')
   },
   { path: '/customer', redirect: '/customer/home' },
+  { path: '/customer', redirect: '/customer/info' },
+  { path: '/customer', redirect: '/customer/order' },
   
 ]
 
