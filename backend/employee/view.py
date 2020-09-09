@@ -31,10 +31,6 @@ def _parse_full_employee_request(update_level = False):
 class EmployeeRootAPI(Resource):
     @authenticated
     def get(self, **kwargs):
-        auth_user = kwargs["user"]
-        if auth_user.role != "admin":
-            return error("Not authorized", 401)
-
         employees = Employee.query.all()
         resp = [employee.json() for employee in employees]
         return resp
@@ -49,14 +45,12 @@ class EmployeeAPI(Resource):
 
         auth_user = kwargs["user"]
 
-        if _acl_same_employee_id_or_admin(id, auth_user):
-            try:
-                return Employee.get_by_id(id).json()
-            except AttributeError as e:
-                return error(e, 400)
-            except ValueError as e:
-                return error(e, 404)
-        return error("Not authorized", 401)
+        try:
+            return Employee.get_by_id(id).json()
+        except AttributeError as e:
+            return error(e, 400)
+        except ValueError as e:
+            return error(e, 404)
         
     @authenticated
     def post(self, id, **kwargs):
