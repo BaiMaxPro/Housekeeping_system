@@ -22,15 +22,11 @@ Vue.use(VueRouter)
   },
   {
     path: '/employee/:page',
-    name: 'employee',
+    name: 'Employee',
     component: () => import('../views/Employee.vue')
   },
   { path: '/customer', redirect: '/customer/home' },
-  { path: '/customer', redirect: '/customer/info' },
-  { path: '/customer', redirect: '/customer/order' },
   { path: '/employee', redirect: '/employee/home' },
-  { path: '/employee', redirect: '/employee/info' },
-  { path: '/employee', redirect: '/employee/order' },
   
 ]
 

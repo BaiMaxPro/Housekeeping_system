@@ -14,7 +14,8 @@ import Order from "../components/employee/Order.vue"
 
 export default {
   mounted: function(){
-    this.setDrawer()
+    this.setDrawer();
+    this.$store.dispatch("employee/get");
   },
 
   data: () => ({
@@ -38,6 +39,7 @@ export default {
       this.$store.dispatch('updateDrawer', {
         title: "雇员应用",
         items: [
+          {title: "雇员中心", icon: "mdi-account-heart",href:"./home"},
           {title: "基本信息", icon: "mdi-account",href:"./info"},
           {title: "订单中心", icon: "mdi-sticker-check-outline",href:"./order"},
         ]
