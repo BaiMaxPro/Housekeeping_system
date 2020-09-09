@@ -14,7 +14,7 @@ import Order from "../components/customer/Order.vue"
 
 export default {
   mounted: function(){
-    this.setDrawer()
+    this.setDrawer();
   },
 
   data: () => ({
@@ -38,9 +38,9 @@ export default {
       this.$store.dispatch('updateDrawer', {
         title: "客户应用",
         items: [
-          {title: "会员中心", icon: "mdi-account-heart"},
-          {title: "基本信息", icon: "mdi-account",href:"./info"},
-          {title: "订单中心", icon: "mdi-sticker-check-outline",href:"./order"},
+          {title: "会员中心", icon: "mdi-account-heart", href:"./home"},
+          {title: "基本信息", icon: "mdi-account", href:"./info"},
+          {title: "订单中心", icon: "mdi-sticker-check-outline", href:"./order"},
         ]
       })
     }

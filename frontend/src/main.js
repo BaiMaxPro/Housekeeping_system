@@ -6,6 +6,15 @@ import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
 
+import VuetifyDialog from 'vuetify-dialog'
+import 'vuetify-dialog/dist/vuetify-dialog.css'
+ 
+Vue.use(VuetifyDialog, {
+  context: {
+    vuetify
+  }
+})
+
 new Vue({
   router,
   store,
