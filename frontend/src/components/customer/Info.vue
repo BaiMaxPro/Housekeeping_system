@@ -15,12 +15,15 @@
 
 <script>
 export default {
+    mounted(){
+      this.form = this.$store.getters["customer/info"]
+    },
     data: () => ({
         form: {
-        name: "LiMing",
-        gender: "",
-        tel:"",
-        address:"",
+            name: "",
+            gender: "",
+            tel:"",
+            address:"",
         },
     }),
 }

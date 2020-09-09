@@ -15,6 +15,7 @@ import Order from "../components/customer/Order.vue"
 export default {
   mounted: function(){
     this.setDrawer();
+    this.$store.dispatch("customer/get");
   },
 
   data: () => ({
