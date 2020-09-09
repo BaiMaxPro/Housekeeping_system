@@ -5,7 +5,6 @@
         <v-text-field v-model="form.name" label="姓名" outlined required></v-text-field> 
         <v-text-field v-model="form.gender" label="性别" outlined required></v-text-field> 
         <v-text-field v-model="form.tel" label="电话" outlined required></v-text-field> 
-        <v-text-field v-model="form.address" label="地址" outlined required></v-text-field> 
         </v-card-text>
         <v-card-actions>
         <v-btn color="blue" text> 保存 </v-btn>
@@ -20,7 +19,6 @@ export default {
         name: "LiMing",
         gender: "",
         tel:"",
-        address:"",
         },
     }),
 }
