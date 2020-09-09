@@ -41,8 +41,8 @@ const actions = {
         }
     },
 
-    async logout({state, commit}){
-        const config = {headers: {"session-id": state.sessionID}};
+    async logout({getters, commit}){
+        const config = {headers: {"session-id": getters.sessionID}};
 
         try {
             await axios.delete('/api/login', config);
