@@ -18,7 +18,7 @@ class Employee(db.Model):
     level = db.Column(db.Integer, nullable=False)
 
     @staticmethod
-    def new_Employee(id, name, gender, tel, level=0) -> "Employee":
+    def new_employee(id, name, gender, tel, level=0) -> "Employee":
         # Test that employee id exists in user table
         user = User.get_by_id(id)
 
