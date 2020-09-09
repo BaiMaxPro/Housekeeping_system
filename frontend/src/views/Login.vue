@@ -46,7 +46,7 @@ export default {
       const role = this.$store.getters.user.role;
       const name = role.charAt(0).toUpperCase() + role.slice(1);
       console.log({name});
-      this.$router.push({name});
+      this.$router.push({name, params: { page: "home" }});
     }
   }
 }
