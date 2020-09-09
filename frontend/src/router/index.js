@@ -16,10 +16,12 @@ Vue.use(VueRouter)
     component: () => import('../views/Login.vue')
   },
   {
-    path: '/customer',
-    name: 'CustomerHome',
+    path: '/customer/:page',
+    name: 'Customer',
     component: () => import('../views/Customer.vue')
-  }
+  },
+  { path: '/customer', redirect: '/customer/home' },
+  
 ]
 
 const router = new VueRouter({

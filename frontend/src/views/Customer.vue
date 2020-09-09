@@ -1,7 +1,6 @@
 <template>
   <div class="fill-height">
-    <!-- 对于router link进行判断渲染相应组件 -->
-    <Home />
+    <Home v-if="currentPage == 'home'" />
   </div>
 </template>
 
@@ -14,11 +13,15 @@ export default {
     this.setDrawer()
   },
 
-  // props: ["active"],
-
   data: () => ({
 
   }),
+
+  computed: {
+    currentPage: function(){
+      return this.$route.params.page
+    },
+  },
 
   components: {
     Home,
