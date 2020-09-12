@@ -69,8 +69,8 @@ class User(db.Model):
 
     id = db.Column(UUIDType(), primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    hash = db.Column(db.BINARY(128), nullable=False)
-    salt = db.Column(db.BINARY(128), nullable=False)
+    hash = db.Column(db.BINARY(32), nullable=False)
+    salt = db.Column(db.BINARY(32), nullable=False)
     role = db.Column(db.String(10), nullable=False)
 
     @staticmethod
@@ -104,7 +104,7 @@ class User(db.Model):
     @staticmethod
     def create_hash(password, salt=None) -> (bytes, bytes):
         if salt == None:
-            salt = os.urandom(16)
+            salt = os.urandom(32)
 
         hash = hashlib.pbkdf2_hmac(
             'sha256', 
