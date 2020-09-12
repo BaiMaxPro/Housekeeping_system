@@ -11,6 +11,6 @@ PORT = os.getenv("PORT") or 5000
 
 FLASK_ENV = os.getenv("FLASK_ENV") or "production"
 
-DEBUG = FLASK_ENV == "debug"
+DEBUG = FLASK_ENV == "development"
 
 INIT_DATABASE = os.getenv("FLASK_INIT_DATABASE") == 'true'
