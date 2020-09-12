@@ -12,8 +12,6 @@
   "dependencies": {
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
-    "element-ui": "^2.13.2",
-    "live-server": "^1.2.1",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuelidate": "^0.7.5",
