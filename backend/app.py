@@ -40,5 +40,7 @@ api.add_resource(OrderAPI, "/order/<string:id>")
 app.register_blueprint(blueprint, url_prefix='/api')
 
 if __name__ == '__main__':
-    create_db(app, db)
-    app.run(host="0.0.0.0", port=config.PORT, debug=True, use_reloader=True)
+    if config.INIT_DATABASE:
+        create_db(app, db)
+
+    app.run(host="0.0.0.0", port=config.PORT, debug=config.DEBUG, use_reloader=config.DEBUG)
